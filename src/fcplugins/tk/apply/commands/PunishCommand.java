@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import fcplugins.tk.apply.Main;
 import fcplugins.tk.apply.objects.Punishment;
-import fcplugins.tk.apply.utils.TimeUtils;
 
 public class PunishCommand implements CommandExecutor {
 
@@ -41,7 +40,6 @@ public class PunishCommand implements CommandExecutor {
 					s.sendMessage("§cPlease use a valid number.");
 					return true;
 				}
-				time = TimeUtils.toSeconds(args[1]);
 
 				if (Main.getInstance().punishementManager.hasPunishment(target.getUniqueId())) {
 					s.sendMessage("§cPlayer §f" + target.getName() + " §cis already tempmuted.");
@@ -52,7 +50,8 @@ public class PunishCommand implements CommandExecutor {
 				final Punishment punish = new Punishment(target.getUniqueId(), System.currentTimeMillis() + expireTime);
 				Main.getInstance().punishementManager.punishPlayer(punish, true);
 
-				Bukkit.broadcastMessage("§f" + target.getName() + "§c was tempmuted by §f" + s.getName());
+				Bukkit.broadcastMessage("§f" + target.getName() + "§c was tempmuted by §f" + s.getName() + " §cfor §f"
+						+ Punishment.getFormatedTime(expireTime));
 			}
 
 			if (cmd.getName().equalsIgnoreCase("unmute")) {
@@ -78,8 +77,8 @@ public class PunishCommand implements CommandExecutor {
 					return true;
 				}
 
-				Main.getInstance().punishementManager.getPunishment(target.getUniqueId())
-						.setTime(System.currentTimeMillis());
+				Main.getInstance().punishementManager
+						.punishPlayer(Main.getInstance().punishementManager.getPunishment(target.getUniqueId()), false);
 				Bukkit.broadcastMessage("§f" + target.getName() + "§c was unmuted by §f" + s.getName());
 			}
 		}

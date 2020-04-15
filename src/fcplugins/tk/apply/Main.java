@@ -6,6 +6,7 @@ import fcplugins.tk.apply.cache.Cache;
 import fcplugins.tk.apply.cache.CacheLoader;
 import fcplugins.tk.apply.commands.PunishCommand;
 import fcplugins.tk.apply.config.BConfig;
+import fcplugins.tk.apply.listener.ChatListener;
 import fcplugins.tk.apply.objects.manager.PunishmentManager;
 
 public class Main extends JavaPlugin {
@@ -21,9 +22,11 @@ public class Main extends JavaPlugin {
 
 		loadConfigFiles();
 		loadCommands();
+		loadListener();
 
 		new Cache();
 		new CacheLoader().loadPunishments();
+
 	}
 
 	public void onDisable() {
@@ -34,6 +37,10 @@ public class Main extends JavaPlugin {
 
 	public void loadConfigFiles() {
 		data.saveDefaultConfig();
+	}
+
+	public void loadListener() {
+		getServer().getPluginManager().registerEvents(new ChatListener(), this);
 	}
 
 	public void loadCommands() {

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import fcplugins.tk.apply.cache.Cache;
+import fcplugins.tk.apply.config.manager.ConfigManager;
 import fcplugins.tk.apply.objects.Punishment;
 
 public class PunishmentManager {
@@ -13,6 +14,7 @@ public class PunishmentManager {
 			Cache.getPunishmentCache().put(punishedPlayer.getUuid(), punishedPlayer);
 		} else {
 			Cache.getPunishmentCache().remove(punishedPlayer.getUuid());
+			ConfigManager.deletePunishment(punishedPlayer);
 		}
 	}
 

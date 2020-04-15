@@ -14,7 +14,6 @@ public class CacheLoader {
 		ConfigurationSection section = Main.getInstance().data.getConfig().getConfigurationSection("Punishments");
 		if (section != null) {
 			for (String punishedPlayer : section.getKeys(false)) {
-
 				Cache.getPunishmentCache().put(UUID.fromString(punishedPlayer),
 						new Punishment(UUID.fromString(punishedPlayer), Long.parseUnsignedLong(
 								Main.getInstance().data.getString("Punishments." + punishedPlayer + ".Time"))));
@@ -24,10 +23,6 @@ public class CacheLoader {
 
 	public void savePunishments() {
 		for (Punishment punishedPlayer : ConfigManager.getAll()) {
-			if (punishedPlayer.isExpired()) {
-				Main.getInstance().punishementManager.punishPlayer(punishedPlayer, false);
-			}
-
 			ConfigManager.savePunishment(punishedPlayer);
 		}
 	}
